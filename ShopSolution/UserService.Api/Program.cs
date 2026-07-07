@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using UserService.Application;
 using UserService.Infrastructure;
+using UserService.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +12,6 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 //builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -18,10 +19,15 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Apply pending migrations on startup
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await db.Database.MigrateAsync();
+}
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
 
 app.UseHttpsRedirection();
 
