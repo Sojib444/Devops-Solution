@@ -28,9 +28,29 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<bool> ExistsByEmailAsync(string email)
+    public async Task<List<User>> GetAllAsync()
     {
         return await _context.Users
-            .AnyAsync(x => x.Email == email);
+            .ToListAsync();
+    }
+
+    public Task UpdateAsync(User user)
+    {
+        _context.Users.Update(user);
+
+        return _context.SaveChangesAsync();
+    }
+
+    public Task DeleteAsync(User user)
+    {
+        _context.Users.Remove(user);
+
+        return _context.SaveChangesAsync();
+    }
+
+    public async Task<bool> ExistsByEmailAsync(string email, int? excludeId = null)
+    {
+        return await _context.Users
+            .AnyAsync(x => x.Email == email && (!excludeId.HasValue || x.Id != excludeId.Value));
     }
 }

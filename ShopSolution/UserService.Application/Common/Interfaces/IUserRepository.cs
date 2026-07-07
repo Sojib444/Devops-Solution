@@ -8,5 +8,11 @@ public interface IUserRepository
 
     Task<User?> GetByIdAsync(int id);
 
-    Task<bool> ExistsByEmailAsync(string email);
+    Task<List<User>> GetAllAsync();
+
+    Task UpdateAsync(User user);
+
+    Task DeleteAsync(User user);
+
+    Task<bool> ExistsByEmailAsync(string email, int? excludeId = null);
 }
