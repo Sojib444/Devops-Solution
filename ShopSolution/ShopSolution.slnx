@@ -1,11 +1,32 @@
 <Solution>
   <Folder Name="/deploy/" />
   <Folder Name="/src/" />
+  <Folder Name="/src/Shared/">
+    <Project Path="ShopSolution.Shared/ShopSolution.Shared.csproj" />
+  </Folder>
   <Folder Name="/src/UserService/">
     <Project Path="UserService.Api/UserService.Api.csproj" />
     <Project Path="UserService.Application/UserService.Application.csproj" />
     <Project Path="UserService.Domain/UserService.Domain.csproj" />
     <Project Path="UserService.Infrastructure/UserService.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/OrderService/">
+    <Project Path="OrderService.Api/OrderService.Api.csproj" />
+    <Project Path="OrderService.Application/OrderService.Application.csproj" />
+    <Project Path="OrderService.Domain/OrderService.Domain.csproj" />
+    <Project Path="OrderService.Infrastructure/OrderService.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/InventoryService/">
+    <Project Path="InventoryService.Api/InventoryService.Api.csproj" />
+    <Project Path="InventoryService.Application/InventoryService.Application.csproj" />
+    <Project Path="InventoryService.Domain/InventoryService.Domain.csproj" />
+    <Project Path="InventoryService.Infrastructure/InventoryService.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/EmailService/">
+    <Project Path="EmailService.Api/EmailService.Api.csproj" />
+    <Project Path="EmailService.Application/EmailService.Application.csproj" />
+    <Project Path="EmailService.Domain/EmailService.Domain.csproj" />
+    <Project Path="EmailService.Infrastructure/EmailService.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/" />
 </Solution>

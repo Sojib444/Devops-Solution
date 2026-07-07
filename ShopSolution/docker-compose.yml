@@ -1,4 +1,16 @@
 services:
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: shop-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: userservice-db
@@ -29,6 +41,57 @@ services:
       ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=UserServiceDb;User Id=sa;Password=YourStrong@Pass123;TrustServerCertificate=True;"
     depends_on:
       sqlserver:
+        condition: service_healthy
+
+  orderservice-api:
+    build:
+      context: .
+      dockerfile: OrderService.Api/Dockerfile
+    container_name: orderservice-api
+    ports:
+      - "5001:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+      ASPNETCORE_ENVIRONMENT: "Docker"
+      RabbitMq__Host: "rabbitmq"
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=OrderServiceDb;User Id=sa;Password=YourStrong@Pass123;TrustServerCertificate=True;"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      sqlserver:
+        condition: service_healthy
+
+  inventoryservice-api:
+    build:
+      context: .
+      dockerfile: InventoryService.Api/Dockerfile
+    container_name: inventoryservice-api
+    ports:
+      - "5002:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+      ASPNETCORE_ENVIRONMENT: "Docker"
+      RabbitMq__Host: "rabbitmq"
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=InventoryServiceDb;User Id=sa;Password=YourStrong@Pass123;TrustServerCertificate=True;"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      sqlserver:
+        condition: service_healthy
+
+  emailservice-api:
+    build:
+      context: .
+      dockerfile: EmailService.Api/Dockerfile
+    container_name: emailservice-api
+    ports:
+      - "5003:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+      ASPNETCORE_ENVIRONMENT: "Docker"
+      RabbitMq__Host: "rabbitmq"
+    depends_on:
+      rabbitmq:
         condition: service_healthy
 
 volumes:
