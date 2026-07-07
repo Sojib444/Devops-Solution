@@ -1,8 +1,6 @@
 <Solution>
   <Folder Name="/deploy/" />
-  <Folder Name="/src/">
-    <Project Path="Gateway/Gateway.csproj" />
-  </Folder>
+  <Folder Name="/src/" />
   <Folder Name="/src/UserService/">
     <Project Path="UserService.Api/UserService.Api.csproj" />
     <Project Path="UserService.Application/UserService.Application.csproj" />
