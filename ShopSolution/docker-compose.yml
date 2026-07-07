@@ -28,13 +28,28 @@ services:
       retries: 10
       start_period: 30s
 
+  gateway:
+    build:
+      context: Gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    ports:
+      - "5000:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+      ASPNETCORE_ENVIRONMENT: "Docker"
+    depends_on:
+      - userservice-api
+      - orderservice-api
+      - inventoryservice-api
+
   userservice-api:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: userservice-api
     ports:
-      - "5000:8080"
+      - "5004:8080"
     environment:
       ASPNETCORE_URLS: "http://+:8080"
       ASPNETCORE_ENVIRONMENT: "Docker"
