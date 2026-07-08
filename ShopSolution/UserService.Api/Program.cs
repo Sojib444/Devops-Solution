@@ -11,6 +11,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 //medirR configuration
 builder.Services.AddApplication();
 
+builder.Services.AddHealthChecks();
 builder.Services.AddControllers();
 //builder.Services.AddOpenApi();
 
@@ -26,10 +27,10 @@ using (var scope = app.Services.CreateScope())
     await db.Database.MigrateAsync();
 }
 
+app.MapHealthChecks("/health");
+
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("./v1/swagger.json", "UserService API"));
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
