@@ -46,7 +46,7 @@ services:
   userservice-api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: UserService.Api/Dockerfile
     container_name: userservice-api
     ports:
       - "5004:8080"

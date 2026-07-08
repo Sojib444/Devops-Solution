@@ -1,6 +1,12 @@
 <Solution>
-  <Folder Name="/deploy/" />
+  <Folder Name="/deploy/">
+    <File Path="docker-compose.yml" />
+    <File Path=".dockerignore" />
+  </Folder>
   <Folder Name="/src/" />
+  <Folder Name="/src/Gateway/">
+    <Project Path="Gateway/Gateway.csproj" />
+  </Folder>
   <Folder Name="/src/Shared/">
     <Project Path="ShopSolution.Shared/ShopSolution.Shared.csproj" />
   </Folder>
